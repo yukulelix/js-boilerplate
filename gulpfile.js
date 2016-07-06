@@ -2,15 +2,20 @@ const gulp = require("gulp")
 const sass = require("gulp-sass")
 const rename = require("gulp-rename")
 const browserify = require("gulp-browserify")
+const sourcemaps = require('gulp-sourcemaps')
+const autoprefixer = require('gulp-autoprefixer')
 const config = require("./config")
 
 gulp.task("sass", function () {
 
 	gulp.src(config.paths.scss.in)
+		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: "compressed"}))
+		.pipe(autoprefixer())
 		.pipe(rename(function (path) {
 			path.basename += ".min"
 		}))
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(config.paths.scss.out))
 
 })
